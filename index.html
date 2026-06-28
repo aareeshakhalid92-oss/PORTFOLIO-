@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Orale Mexican Kitchen — Hoboken · Jersey City · Morristown</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:     #0F0E0D;
+    --charcoal:  #1C1A18;
+    --terra:     #C1440E;
+    --gold:      #F5B942;
+    --cream:     #FAF3E8;
+    --sage:      #6B8F6B;
+    --muted:     #8A8178;
+    --border:    rgba(255,255,255,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--black);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px;
+    background: linear-gradient(to bottom, rgba(15,14,13,0.95), transparent);
+    backdrop-filter: blur(2px);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; letter-spacing: 3px;
+    color: var(--cream);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--terra); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--muted);
+    text-decoration: none; transition: color .25s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--terra); color: var(--cream);
+    border: none; padding: 11px 26px;
+    font-family: 'Inter', sans-serif; font-size: 12px;
+    font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    cursor: pointer; transition: background .25s;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: #d94e14; }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; height: 100vh; min-height: 640px;
+    display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 0 48px 72px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to top, rgba(15,14,13,1) 0%, rgba(15,14,13,0.5) 50%, rgba(15,14,13,0.2) 100%),
+      url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1600&q=80') center/cover no-repeat;
+  }
+  /* Skull mural pattern overlay — the signature element */
+  .hero-skull {
+    position: absolute; top: 0; right: 0; bottom: 0;
+    width: 50%; pointer-events: none; z-index: 1;
+    background:
+      linear-gradient(to right, rgba(15,14,13,1) 0%, transparent 40%),
+      url('https://images.unsplash.com/photo-1583394293214-0d305e9c8b13?w=800&q=80') right center/cover no-repeat;
+    opacity: 0.25;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 680px; }
+  .hero-eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px; letter-spacing: 5px;
+    color: var(--terra); margin-bottom: 18px;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 8vw, 100px);
+    font-weight: 900; line-height: .95;
+    color: var(--cream); margin-bottom: 28px;
+  }
+  .hero-title em { color: var(--gold); font-style: italic; }
+  .hero-sub {
+    font-size: 16px; font-weight: 300; color: rgba(250,243,232,0.7);
+    max-width: 420px; line-height: 1.7; margin-bottom: 40px;
+  }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--terra); color: var(--cream);
+    padding: 15px 34px; text-decoration: none;
+    font-size: 12px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; transition: background .25s, transform .2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #d94e14; transform: translateY(-2px); }
+  .btn-ghost {
+    border: 1px solid rgba(250,243,232,0.3); color: var(--cream);
+    padding: 15px 34px; text-decoration: none;
+    font-size: 12px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; transition: border-color .25s, transform .2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  .hero-locations {
+    position: absolute; bottom: 72px; right: 48px; z-index: 2;
+    text-align: right;
+  }
+  .hero-locations p {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); line-height: 2.2;
+  }
+  .hero-locations p strong { color: var(--gold); font-weight: 500; }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    background: var(--terra); padding: 14px 0;
+    overflow: hidden; white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-block;
+    animation: marquee 20s linear infinite;
+  }
+  .marquee-track span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px; letter-spacing: 4px;
+    color: var(--cream); margin: 0 32px;
+  }
+  .marquee-track span.dot { color: rgba(255,255,255,0.4); margin: 0 4px; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ── SECTIONS ── */
+  section { padding: 100px 48px; }
+
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px; letter-spacing: 5px; color: var(--terra);
+    margin-bottom: 16px; text-transform: uppercase;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 60px); font-weight: 900;
+    line-height: 1.05; color: var(--cream); margin-bottom: 24px;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  /* ── ABOUT ── */
+  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .about-text p {
+    font-size: 16px; color: rgba(250,243,232,0.65);
+    line-height: 1.85; margin-bottom: 20px;
+  }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--border); margin-top: 48px;
+  }
+  .stat-box {
+    background: var(--charcoal); padding: 28px 24px;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px; color: var(--gold); line-height: 1;
+  }
+  .stat-desc {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-top: 6px;
+  }
+  .about-img-stack { position: relative; }
+  .about-img-main {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover;
+    display: block;
+  }
+  .about-img-accent {
+    position: absolute; bottom: -30px; right: -30px;
+    width: 55%; aspect-ratio: 1; object-fit: cover;
+    border: 6px solid var(--black);
+  }
+
+  /* ── MENU CARDS ── */
+  .menu-section { background: var(--charcoal); }
+  .menu-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 56px; flex-wrap: wrap; gap: 24px;
+  }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .menu-card {
+    position: relative; overflow: hidden;
+    aspect-ratio: 3/4; cursor: pointer;
+    background: var(--black);
+  }
+  .menu-card img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .6s cubic-bezier(.25,.46,.45,.94), filter .6s;
+    filter: brightness(0.75);
+  }
+  .menu-card:hover img { transform: scale(1.07); filter: brightness(0.5); }
+  .menu-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(15,14,13,0.95) 0%, transparent 55%);
+  }
+  .menu-card-content {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 28px 24px;
+    transform: translateY(8px);
+    transition: transform .4s;
+  }
+  .menu-card:hover .menu-card-content { transform: translateY(0); }
+  .menu-card-tag {
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--terra); margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .menu-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700; color: var(--cream);
+    margin-bottom: 10px;
+  }
+  .menu-card-desc {
+    font-size: 13px; color: rgba(250,243,232,0.6); line-height: 1.6;
+    max-height: 0; overflow: hidden;
+    transition: max-height .5s ease, opacity .4s;
+    opacity: 0;
+  }
+  .menu-card:hover .menu-card-desc { max-height: 80px; opacity: 1; }
+
+  /* Large featured card */
+  .menu-card.featured { grid-row: span 2; aspect-ratio: auto; }
+
+  /* ── BAR ── */
+  .bar-section {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .bar-img {
+    width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block;
+  }
+  .bar-text p {
+    font-size: 16px; color: rgba(250,243,232,0.65);
+    line-height: 1.85; margin-bottom: 20px;
+  }
+  .cocktail-list { list-style: none; margin-top: 32px; }
+  .cocktail-list li {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 14px 0; border-bottom: 1px solid var(--border);
+    font-size: 15px;
+  }
+  .cocktail-list li:last-child { border-bottom: none; }
+  .cocktail-name { color: var(--cream); font-weight: 500; }
+  .cocktail-price { color: var(--gold); font-weight: 600; font-size: 14px; }
+
+  /* ── LOCATIONS ── */
+  .locations-section { background: var(--charcoal); }
+  .locations-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; margin-top: 56px;
+  }
+  .loc-card {
+    background: var(--black); padding: 40px 36px;
+    transition: background .3s;
+  }
+  .loc-card:hover { background: #181614; }
+  .loc-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px; color: var(--terra);
+    opacity: 0.25; line-height: 1; margin-bottom: 16px;
+  }
+  .loc-city {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 700; color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .loc-address { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  .loc-hours { font-size: 13px; color: var(--sage); margin-top: 16px; font-weight: 500; }
+  .loc-phone {
+    display: inline-block; margin-top: 20px;
+    font-size: 13px; color: var(--gold); text-decoration: none;
+    letter-spacing: 1px;
+  }
+  .loc-phone:hover { text-decoration: underline; }
+
+  /* ── GALLERY STRIP ── */
+  .gallery-strip {
+    display: flex; gap: 2px; overflow: hidden; height: 260px;
+  }
+  .gallery-strip div {
+    flex: 1; overflow: hidden; min-width: 0;
+    transition: flex .5s cubic-bezier(.25,.46,.45,.94);
+  }
+  .gallery-strip div:hover { flex: 2.5; }
+  .gallery-strip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ── EVENTS ── */
+  .events-banner {
+    background: var(--terra); padding: 64px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 32px;
+  }
+  .events-banner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 48px); font-weight: 900;
+    color: var(--cream); max-width: 500px;
+  }
+  .events-banner h2 em { font-style: italic; opacity: 0.8; }
+
+  /* ── RESERVE ── */
+  .reserve-section {
+    text-align: center; padding: 120px 48px;
+    background:
+      linear-gradient(rgba(15,14,13,0.88), rgba(15,14,13,0.88)),
+      url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80') center/cover no-repeat fixed;
+  }
+  .reserve-section .section-title { font-size: clamp(40px, 6vw, 72px); }
+  .reserve-section p {
+    font-size: 16px; color: rgba(250,243,232,0.6); max-width: 480px;
+    margin: 0 auto 48px; line-height: 1.8;
+  }
+  .reserve-form {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    justify-content: center; max-width: 640px; margin: 0 auto;
+  }
+  .reserve-form input, .reserve-form select {
+    flex: 1; min-width: 180px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+    color: var(--cream); padding: 14px 18px;
+    font-family: 'Inter', sans-serif; font-size: 14px;
+    outline: none; transition: border-color .25s;
+    -webkit-appearance: none;
+  }
+  .reserve-form input::placeholder { color: var(--muted); }
+  .reserve-form input:focus, .reserve-form select:focus { border-color: var(--gold); }
+  .reserve-form select option { background: var(--charcoal); color: var(--cream); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--charcoal); border-top: 1px solid var(--border);
+    padding: 64px 48px 40px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+  }
+  .footer-brand .nav-logo { display: block; margin-bottom: 16px; font-size: 26px; }
+  .footer-brand p { font-size: 13px; color: var(--muted); line-height: 1.8; max-width: 240px; }
+  .footer-col h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px; letter-spacing: 3px; color: var(--gold);
+    margin-bottom: 18px;
+  }
+  .footer-col a {
+    display: block; font-size: 13px; color: var(--muted);
+    text-decoration: none; margin-bottom: 10px; transition: color .2s;
+  }
+  .footer-col a:hover { color: var(--cream); }
+  .footer-bottom {
+    grid-column: 1/-1; border-top: 1px solid var(--border);
+    padding-top: 28px; display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-bottom p { font-size: 12px; color: var(--muted); }
+
+  /* social pills */
+  .social-row { display: flex; gap: 12px; margin-top: 20px; }
+  .social-pill {
+    width: 38px; height: 38px; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; color: var(--muted); font-size: 14px;
+    transition: border-color .25s, color .25s;
+  }
+  .social-pill:hover { border-color: var(--terra); color: var(--terra); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    .nav-links { display: none; }
+    section { padding: 72px 24px; }
+    .hero { padding: 0 24px 56px; }
+    .hero-locations { display: none; }
+    .about { grid-template-columns: 1fr; }
+    .about-img-accent { display: none; }
+    .menu-grid { grid-template-columns: 1fr 1fr; }
+    .menu-card.featured { grid-row: auto; aspect-ratio: 3/4; }
+    .bar-section { grid-template-columns: 1fr; }
+    .locations-grid { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr 1fr; }
+    .reserve-form input, .reserve-form select { min-width: 100%; }
+    .events-banner { padding: 48px 24px; }
+  }
+
+  @media (max-width: 600px) {
+    .menu-grid { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#"><span>¡</span>ORALE<span>!</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#bar">Bar</a></li>
+    <li><a href="#locations">Locations</a></li>
+    <li><a href="#events">Events</a></li>
+  </ul>
+  <a href="#reserve" class="nav-cta">Reserve a Table</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-skull"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Orale Mexican Kitchen — Est. NJ</p>
+    <h1 class="hero-title">A little<br><em>loud.</em><br>A little dim.</h1>
+    <p class="hero-sub">Exactly where you want to be. Bold Mexican flavors, serious cocktails, and a vibe you didn't know you were missing.</p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary">Explore the Menu</a>
+      <a href="#reserve" class="btn-ghost">Make a Reservation</a>
+    </div>
+  </div>
+  <div class="hero-locations">
+    <p><strong>Hoboken, NJ</strong></p>
+    <p><strong>Jersey City, NJ</strong></p>
+    <p><strong>Morristown, NJ</strong></p>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Seared Octopus</span><span class="dot">✦</span>
+    <span>Frozen Margaritas</span><span class="dot">✦</span>
+    <span>Flautas de Res</span><span class="dot">✦</span>
+    <span>Jumbo Shrimp</span><span class="dot">✦</span>
+    <span>Mole Negro</span><span class="dot">✦</span>
+    <span>Elotes Fries</span><span class="dot">✦</span>
+    <span>Mezcal Negroni</span><span class="dot">✦</span>
+    <span>Seared Octopus</span><span class="dot">✦</span>
+    <span>Frozen Margaritas</span><span class="dot">✦</span>
+    <span>Flautas de Res</span><span class="dot">✦</span>
+    <span>Jumbo Shrimp</span><span class="dot">✦</span>
+    <span>Mole Negro</span><span class="dot">✦</span>
+    <span>Elotes Fries</span><span class="dot">✦</span>
+    <span>Mezcal Negroni</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about">
+    <div class="about-text">
+      <p class="section-label">Our Story</p>
+      <h2 class="section-title">Mexican soul,<br><em>Jersey heart.</em></h2>
+      <p>Orale isn't trying to be fancy. We're trying to be real — the kind of place where the food is bold, the drinks are cold, and the night has its own energy.</p>
+      <p>From seared octopus plated like art to short rib Flautas drowning in mole negro, every dish is a full commitment. No half measures. No apologies. Just Mexican food done the way it deserves to be.</p>
+      <div class="about-stats">
+        <div class="stat-box">
+          <div class="stat-num">88%</div>
+          <div class="stat-desc">Recommend on 1,082 reviews</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">3</div>
+          <div class="stat-desc">Locations across New Jersey</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">3.6K</div>
+          <div class="stat-desc">Posts of food you'll want to order</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">∞</div>
+          <div class="stat-desc">Rounds of frozen margaritas</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-img-stack">
+      <img class="about-img-main"
+        src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80"
+        alt="Orale dining room" loading="lazy"/>
+      <img class="about-img-accent"
+        src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=400&q=80"
+        alt="Mexican cocktail" loading="lazy"/>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY STRIP -->
+<div class="gallery-strip">
+  <div><img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80" alt="Food 1" loading="lazy"/></div>
+  <div><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Food 2" loading="lazy"/></div>
+  <div><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=80" alt="Food 3" loading="lazy"/></div>
+  <div><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Restaurant" loading="lazy"/></div>
+  <div><img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=600&q=80" alt="Bar" loading="lazy"/></div>
+</div>
+
+<!-- MENU -->
+<section id="menu" class="menu-section">
+  <div class="menu-header">
+    <div>
+      <p class="section-label">What We're Known For</p>
+      <h2 class="section-title">The menu hits<br><em>different here.</em></h2>
+    </div>
+    <a href="https://oralemk.com" target="_blank" class="btn-ghost">Full Menu</a>
+  </div>
+
+  <div class="menu-grid">
+    <!-- featured -->
+    <div class="menu-card featured">
+      <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=800&q=80" alt="Seared Octopus" loading="lazy"/>
+      <div class="menu-card-overlay"></div>
+      <div class="menu-card-content">
+        <p class="menu-card-tag">Chef's Signature</p>
+        <h3 class="menu-card-name">Seared Octopus</h3>
+        <p class="menu-card-desc">Smoky, citrusy, a little spicy — served over roasted potato with avocado sauce, pickled red onion, and a habanero mango drizzle.</p>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=600&q=80" alt="Flautas de Res" loading="lazy"/>
+      <div class="menu-card-overlay"></div>
+      <div class="menu-card-content">
+        <p class="menu-card-tag">Fan Favorite</p>
+        <h3 class="menu-card-name">Flautas de Res</h3>
+        <p class="menu-card-desc">Crispy beef flautas in black bean mole, crema, cotija and fresh cilantro.</p>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=80" alt="Jumbo Shrimp" loading="lazy"/>
+      <div class="menu-card-overlay"></div>
+      <div class="menu-card-content">
+        <p class="menu-card-tag">From the Sea</p>
+        <h3 class="menu-card-name">Jumbo Shrimp a la Diabla</h3>
+        <p class="menu-card-desc">A little heat, a little citrus — the plate disappears faster than expected.</p>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Short Rib Mole" loading="lazy"/>
+      <div class="menu-card-overlay"></div>
+      <div class="menu-card-content">
+        <p class="menu-card-tag">Weekend Special</p>
+        <h3 class="menu-card-name">Short Rib Mole Negro</h3>
+        <p class="menu-card-desc">Braised short ribs in 26-ingredient mole negro, served with fresh chapati.</p>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Elotes Fries" loading="lazy"/>
+      <div class="menu-card-overlay"></div>
+      <div class="menu-card-content">
+        <p class="menu-card-tag">Can't Miss Side</p>
+        <h3 class="menu-card-name">Elotes Fries</h3>
+        <p class="menu-card-desc">Crispy fries tossed in chili-lime seasoning, jalapeños and a chipotle crema.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BAR -->
+<section id="bar">
+  <div class="bar-section">
+    <img class="bar-img"
+      src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?w=800&q=80"
+      alt="Orale Bar" loading="lazy"/>
+    <div class="bar-text">
+      <p class="section-label">The Bar Program</p>
+      <h2 class="section-title">Drinks built<br><em>to stay.</em></h2>
+      <p>A wall of agave spirits. A team that knows what to do with them. Whether you're working through the mezcal list or just need a frozen margarita before you figure out the night — we've got you.</p>
+      <ul class="cocktail-list">
+        <li>
+          <span class="cocktail-name">Frozen Strawberry Margarita</span>
+          <span class="cocktail-price">$14</span>
+        </li>
+        <li>
+          <span class="cocktail-name">Mezcal Negroni</span>
+          <span class="cocktail-price">$16</span>
+        </li>
+        <li>
+          <span class="cocktail-name">Oaxacan Old Fashioned</span>
+          <span class="cocktail-price">$17</span>
+        </li>
+        <li>
+          <span class="cocktail-name">Paloma Picante</span>
+          <span class="cocktail-price">$15</span>
+        </li>
+        <li>
+          <span class="cocktail-name">Hibiscus Agua Fresca (NA)</span>
+          <span class="cocktail-price">$8</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATIONS -->
+<section id="locations" class="locations-section">
+  <div style="text-align:center; margin-bottom: 0;">
+    <p class="section-label" style="display:inline-block;">Find Us</p>
+    <h2 class="section-title">Three spots.<br><em>One obsession.</em></h2>
+  </div>
+  <div class="locations-grid">
+    <div class="loc-card">
+      <div class="loc-num">01</div>
+      <div class="loc-city">Hoboken</div>
+      <div class="loc-address">
+        311 Washington St<br/>Hoboken, NJ 07030
+      </div>
+      <div class="loc-hours">Mon–Thu 4–10pm · Fri–Sun 12–11pm</div>
+      <a class="loc-phone" href="tel:+12013330001">+1 (201) 333-0001</a>
+    </div>
+    <div class="loc-card">
+      <div class="loc-num">02</div>
+      <div class="loc-city">Jersey City</div>
+      <div class="loc-address">
+        Jersey City, NJ<br/>Hudson County
+      </div>
+      <div class="loc-hours">Mon–Thu 4–10pm · Fri–Sun 12–11pm</div>
+      <a class="loc-phone" href="tel:+12013330001">+1 (201) 333-0001</a>
+    </div>
+    <div class="loc-card">
+      <div class="loc-num">03</div>
+      <div class="loc-city">Morristown</div>
+      <div class="loc-address">
+        Morristown, NJ<br/>Morris County
+      </div>
+      <div class="loc-hours">Mon–Thu 4–10pm · Fri–Sun 12–11pm</div>
+      <a class="loc-phone" href="tel:+12013330001">+1 (201) 333-0001</a>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS BANNER -->
+<div id="events" class="events-banner">
+  <h2>Hosting an event?<br><em>Let's make it unforgettable.</em></h2>
+  <a href="mailto:events@oralemk.com" class="btn-primary" style="background:#0F0E0D;">Email Our Events Team</a>
+</div>
+
+<!-- RESERVE -->
+<section id="reserve" class="reserve-section">
+  <p class="section-label" style="display:inline-block; margin-bottom:16px;">Book Your Table</p>
+  <h2 class="section-title" style="margin-bottom:20px;">Come hungry.<br><em>Leave happy.</em></h2>
+  <p>Reservations recommended. Walk-ins always welcome while we have space.</p>
+  <div class="reserve-form">
+    <input type="text" placeholder="Full Name" />
+    <input type="email" placeholder="Email Address" />
+    <input type="date" />
+    <select>
+      <option value="">Party Size</option>
+      <option>1–2 guests</option>
+      <option>3–4 guests</option>
+      <option>5–6 guests</option>
+      <option>7+ guests</option>
+    </select>
+    <select>
+      <option value="">Location</option>
+      <option>Hoboken</option>
+      <option>Jersey City</option>
+      <option>Morristown</option>
+    </select>
+    <a href="https://oralemk.com" target="_blank" class="btn-primary" style="flex: 1; min-width: 180px; text-align: center; padding-top: 15px; padding-bottom: 15px;">Reserve Now</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <a class="nav-logo" href="#"><span>¡</span>ORALE<span>!</span></a>
+    <p>Mexican Kitchen in Hoboken, Jersey City, and Morristown, NJ. Bold flavors, cold drinks, and a vibe all our own.</p>
+    <div class="social-row">
+      <a class="social-pill" href="https://facebook.com/oralemk" target="_blank" title="Facebook">f</a>
+      <a class="social-pill" href="https://instagram.com/oralemk" target="_blank" title="Instagram">ig</a>
+    </div>
+  </div>
+  <div class="footer-col">
+    <h4>Explore</h4>
+    <a href="#about">Our Story</a>
+    <a href="#menu">Menu</a>
+    <a href="#bar">Bar & Drinks</a>
+    <a href="#events">Private Events</a>
+  </div>
+  <div class="footer-col">
+    <h4>Locations</h4>
+    <a href="#locations">Hoboken, NJ</a>
+    <a href="#locations">Jersey City, NJ</a>
+    <a href="#locations">Morristown, NJ</a>
+  </div>
+  <div class="footer-col">
+    <h4>Contact</h4>
+    <a href="tel:+12013330001">+1 (201) 333-0001</a>
+    <a href="mailto:events@oralemk.com">events@oralemk.com</a>
+    <a href="https://oralemk.com" target="_blank">oralemk.com</a>
+    <a href="https://www.facebook.com/oralemk" target="_blank">@oralemk</a>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Orale Mexican Kitchen. All rights reserved.</p>
+    <p>88% of guests recommend us — be the next one.</p>
+  </div>
+</footer>
+
+</body>
+</html>
